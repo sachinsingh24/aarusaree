@@ -110,18 +110,10 @@
   width: 76%;
   margin-left: auto;
   aspect-ratio: 4 / 5.6;
-}
-
-.hero__media::before {
-  content: '';
-  position: absolute;
-  top: -18px;
-  right: -14px;
-  width: 76%;
-  aspect-ratio: 4 / 5.6;
-  border: 1px solid var(--gold-light);
-  border-radius: 999px 999px var(--radius) var(--radius);
-  pointer-events: none;
+  /* Thin gold frame following the arch shape with an even gap all round
+     (outline isn't clipped by overflow and moves with the photo's entrance animation). */
+  outline: 1px solid var(--gold-light);
+  outline-offset: 12px;
 }
 
 .hero__arch--main img {
@@ -216,9 +208,8 @@
     max-width: 82%;
   }
 
-  .hero__media::before {
-    right: -6px;
-    top: -12px;
+  .hero__arch--main {
+    outline-offset: 8px;
   }
 }
 
@@ -778,9 +769,15 @@
 
 .visit-band__info p {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 10px;
   margin-bottom: 10px;
+}
+
+/* Icon stays on the first line when the address wraps */
+.visit-band__info > p .icon {
+  flex-shrink: 0;
+  margin-top: 0.2em;
 }
 
 /* Only the map-pin / clock icons are gold; icons inside the buttons follow the button colour. */
@@ -1174,6 +1171,15 @@
   object-position: center 25%;
   border-radius: 999px 999px var(--radius) var(--radius);
   background: var(--beige);
+  /* Same thin gold arch frame as the home page hero photo */
+  outline: 1px solid var(--gold-light);
+  outline-offset: 12px;
+}
+
+@media (max-width: 480px) {
+  .collection-row__banner {
+    outline-offset: 8px;
+  }
 }
 
 .collection-row__product {

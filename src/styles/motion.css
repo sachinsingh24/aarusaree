@@ -52,36 +52,31 @@ html:lang(mr) .hero__title em {
 }
 
 /* ── Hero: tiny gold sparkles twinkling around the photos ───────────────── */
+/* Drawn above the photos too, so some twinkle like glints on the sarees. */
 .hero__sparkles {
   position: absolute;
   inset: 0;
+  z-index: 1;
   pointer-events: none;
 }
 
 .hero__sparkles i {
   position: absolute;
-  width: var(--s, 12px);
+  width: var(--s, 10px);
   aspect-ratio: 1;
   background: var(--gold-light);
   clip-path: polygon(50% 0, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0 50%, 39% 39%);
   opacity: 0;
-  animation: twinkle 4.8s ease-in-out var(--d, 0s) infinite;
+  animation: twinkle var(--t, 4.8s) ease-in-out var(--d, 0s) infinite;
 }
 
-.hero__sparkles i:nth-child(1) { top: 12%; left: 54%; --s: 14px; --d: 0.2s; }
-.hero__sparkles i:nth-child(2) { top: 22%; left: 94%; --s: 10px; --d: 1.4s; }
-.hero__sparkles i:nth-child(3) { top: 48%; left: 50%; --s: 8px; --d: 2.6s; }
-.hero__sparkles i:nth-child(4) { top: 70%; left: 96%; --s: 12px; --d: 0.9s; }
-.hero__sparkles i:nth-child(5) { top: 86%; left: 58%; --s: 9px; --d: 3.3s; }
-.hero__sparkles i:nth-child(6) { top: 8%; left: 30%; --s: 10px; --d: 2s; }
-.hero__sparkles i:nth-child(7) { top: 62%; left: 6%; --s: 8px; --d: 3.8s; }
-.hero__sparkles i:nth-child(8) { top: 36%; left: 74%; --s: 7px; --d: 4.2s; }
-
-/* On phones the copy sits above the photos, so keep sparkles to the edges. */
+/* On phones the text spans the full width, so only stars at the edges show. */
 @media (max-width: 899px) {
-  .hero__sparkles i:nth-child(3),
-  .hero__sparkles i:nth-child(6),
-  .hero__sparkles i:nth-child(8) {
+  .hero__sparkles {
+    z-index: 0; /* behind the text, which runs close to the screen edges */
+  }
+
+  .hero__sparkle--wide {
     display: none;
   }
 }
@@ -226,6 +221,112 @@ html:lang(mr) .hero__title em {
   }
 }
 
+/* ── Twinkling gold stars in every section ─────────────────────────────────
+   Two layers per section (::before and ::after) fade in and out out of step, so the stars
+   seem to twinkle. They sit behind the text and cards, showing only in the open background.
+   Even-numbered sections use a mirrored pattern so neighbouring sections don't look alike. */
+:root {
+  --section-star: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill='%23c9a55c' d='M10 0l2.2 7.8L20 10l-7.8 2.2L10 20l-2.2-7.8L0 10l7.8-2.2z'/%3E%3C/svg%3E");
+}
+
+:root {
+  --section-star-light: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill='%23e6cc8f' d='M10 0l2.2 7.8L20 10l-7.8 2.2L10 20l-2.2-7.8L0 10l7.8-2.2z'/%3E%3C/svg%3E");
+}
+
+/* The footer is always dark navy, so it always uses the brighter gold star. */
+.site-footer {
+  --section-star: var(--section-star-light);
+}
+
+:root[data-theme='dark'] {
+  --section-star: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill='%23e6cc8f' d='M10 0l2.2 7.8L20 10l-7.8 2.2L10 20l-2.2-7.8L0 10l7.8-2.2z'/%3E%3C/svg%3E");
+}
+
+.section,
+.visit-band,
+.about-cta,
+.page-banner,
+.not-found {
+  position: relative;
+  isolation: isolate;
+}
+
+.section::before,
+.section::after,
+.visit-band::before,
+.visit-band::after,
+.about-cta::before,
+.about-cta::after,
+.page-banner::before,
+.page-banner::after,
+.not-found::before,
+.not-found::after,
+.site-footer::before,
+.site-footer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  opacity: 0.15;
+}
+
+.section::before,
+.visit-band::before,
+.about-cta::before,
+.page-banner::before,
+.not-found::before,
+.site-footer::before {
+  background-image: var(--section-star), var(--section-star), var(--section-star), var(--section-star), var(--section-star), var(--section-star), var(--section-star), var(--section-star);
+  background-size: 10px 10px, 8px 8px, 12px 12px, 9px 9px, 7px 7px, 11px 11px, 6px 6px, 8px 8px;
+  background-position: 12% 6%, 78% 22%, 4% 38%, 92% 55%, 30% 70%, 64% 84%, 46% 14%, 10% 95%;
+  animation: section-twinkle 5s ease-in-out infinite;
+}
+
+.section::after,
+.visit-band::after,
+.about-cta::after,
+.page-banner::after,
+.not-found::after,
+.site-footer::after {
+  background-image: var(--section-star), var(--section-star), var(--section-star), var(--section-star), var(--section-star), var(--section-star), var(--section-star), var(--section-star);
+  background-size: 9px 9px, 7px 7px, 10px 10px, 8px 8px, 12px 12px, 7px 7px, 6px 6px, 9px 9px;
+  background-position: 90% 10%, 20% 28%, 60% 46%, 8% 62%, 96% 78%, 48% 92%, 98% 34%, 2% 88%;
+  animation: section-twinkle 6.5s ease-in-out 2.4s infinite;
+}
+
+.section:nth-of-type(even)::before,
+.section:nth-of-type(even)::after {
+  transform: scaleX(-1);
+}
+
+/* Photo banners: keep the photo below the stars (stars still sit under the text). */
+.page-banner__media,
+.about-cta__media {
+  z-index: -2;
+}
+
+@keyframes section-twinkle {
+  0%,
+  100% {
+    opacity: 0.15;
+  }
+  50% {
+    opacity: 0.85;
+  }
+}
+
+/* ── High-contrast mode (e.g. Windows): show the headline word as normal text ── */
+@media (forced-colors: active) {
+  .hero__title em {
+    background: none;
+    color: CanvasText;
+    -webkit-text-fill-color: currentColor;
+    animation: none;
+  }
+}
+
 /* ── Reduced motion: no movement at all, just the finished look ─────────── */
 @media (prefers-reduced-motion: reduce) {
   .page-transition.is-entering,
@@ -237,6 +338,23 @@ html:lang(mr) .hero__title em {
   .page-banner__ornament,
   .drawer.is-open .drawer__list > li {
     animation: none;
+  }
+
+  /* Section stars stay still, softly visible */
+  .section::before,
+  .section::after,
+  .visit-band::before,
+  .visit-band::after,
+  .about-cta::before,
+  .about-cta::after,
+  .page-banner::before,
+  .page-banner::after,
+  .not-found::before,
+  .not-found::after,
+  .site-footer::before,
+  .site-footer::after {
+    animation: none;
+    opacity: 0.45;
   }
 
   .hero__sparkles,

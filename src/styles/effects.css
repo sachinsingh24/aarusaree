@@ -385,7 +385,7 @@ main :where(.page-transition) > section.section + section.section {
 .back-to-top {
   position: fixed;
   right: var(--fab-edge);
-  bottom: calc(var(--fab-edge) + env(safe-area-inset-bottom, 0px) + var(--fab-size) + var(--fab-gap));
+  bottom: calc(var(--fab-edge) + var(--fab-size) + var(--fab-gap));
   z-index: 89;
   display: grid;
   place-items: center;

@@ -37,9 +37,8 @@
         var root = document.documentElement;
         try {
           var theme = localStorage.getItem('aarus-theme');
-          if (theme !== 'dark' && theme !== 'light') {
-            theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-          }
+          // Light mode by default; dark only when the visitor has chosen it.
+          if (theme !== 'dark') theme = 'light';
           root.setAttribute('data-theme', theme);
           var meta = document.querySelector('meta[name="theme-color"]');
           if (meta && theme === 'dark') meta.setAttribute('content', '#0b1222');
@@ -56,25 +55,7 @@
       })();
     </script>
 
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "ClothingStore",
-        "name": "Aaru's Fancy Sarees",
-        "slogan": "Elegance Woven in Tradition",
-        "telephone": "+91 98675 03342",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "Shop No. 8, Shiv Kripa Building, Near DNS Bank",
-          "addressLocality": "Badlapur East",
-          "postalCode": "421503",
-          "addressRegion": "Maharashtra",
-          "addressCountry": "IN"
-        },
-        "geo": { "@type": "GeoCoordinates", "latitude": 19.1642026, "longitude": 73.2396524 },
-        "sameAs": ["https://www.instagram.com/aarusfancy_sarees/"]
-      }
-    </script>
+    <!-- Store details for search engines are added from src/data/site.js (see vite.config.js). -->
   </head>
   <body>
     <noscript>Please enable JavaScript to view Aaru's Fancy Sarees.</noscript>

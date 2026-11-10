@@ -35,15 +35,17 @@ export const contact = {
   },
   geo: shopPin,
   mapEmbed: `https://www.google.com/maps?q=${shopPin.lat},${shopPin.lng}&z=17&output=embed`,
-  // Opens Google Maps at the pin; visitors can tap "Directions" from there.
+  // Opens Google Maps at the pin.
   mapLink: `https://www.google.com/maps/search/?api=1&query=${shopPin.lat}%2C${shopPin.lng}`,
+  // Opens Google Maps with a route to the pin from wherever the visitor is.
+  directionsLink: `https://www.google.com/maps/dir/?api=1&destination=${shopPin.lat}%2C${shopPin.lng}`,
   hours: [
     { days: 'Monday – Saturday', time: '11:00 am – 9:00 pm' }, // DUMMY
     { days: 'Sunday', time: '12:00 pm – 8:00 pm' }, // DUMMY
   ],
 };
 
-/** Address parts to display, skipping any that are empty (e.g. ['Badlapur, Maharashtra']). */
+/** Address lines to display, skipping any that are empty. */
 export function addressParts(a = contact.address) {
   const cityLine = [[a.city, a.state].filter(Boolean).join(', '), a.pincode].filter(Boolean).join(' ');
   return [a.line1, a.line2, cityLine].filter(Boolean);

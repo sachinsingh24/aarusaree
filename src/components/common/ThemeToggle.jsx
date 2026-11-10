@@ -5,8 +5,6 @@ import { useLanguage } from '../../i18n/LanguageContext';
 const STORAGE_KEY = 'aarus-theme';
 const THEME_COLORS = { light: '#15233f', dark: '#0b1222' };
 
-const systemTheme = () => (window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-
 function storedTheme() {
   try {
     const v = localStorage.getItem(STORAGE_KEY);
@@ -22,25 +20,16 @@ function applyTheme(theme) {
 }
 
 /**
- * Light/dark switch. The first visit follows the device setting; an explicit choice is remembered.
+ * Light/dark switch. The site opens in light mode; a visitor who picks dark mode gets it on later visits.
  * index.html applies the saved theme before the page paints, so there is no flash.
  */
 export default function ThemeToggle({ className = '' }) {
   const { t } = useLanguage();
-  const [theme, setTheme] = useState(() => document.documentElement.dataset.theme || storedTheme() || systemTheme());
+  const [theme, setTheme] = useState(() => document.documentElement.dataset.theme || storedTheme() || 'light');
 
   useEffect(() => {
     applyTheme(theme);
   }, [theme]);
-
-  // Follow device changes until the visitor picks a theme themselves.
-  useEffect(() => {
-    const mq = window.matchMedia?.('(prefers-color-scheme: dark)');
-    if (!mq) return undefined;
-    const onChange = (e) => !storedTheme() && setTheme(e.matches ? 'dark' : 'light');
-    mq.addEventListener('change', onChange);
-    return () => mq.removeEventListener('change', onChange);
-  }, []);
 
   const toggle = () => {
     const next = theme === 'dark' ? 'light' : 'dark';

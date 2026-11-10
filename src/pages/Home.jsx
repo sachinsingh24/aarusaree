@@ -13,7 +13,7 @@ import CountUp from '../components/common/CountUp';
 import FaqSection from '../components/common/FaqSection';
 import { occasions } from '../data/occasions';
 import ReelsShowcase from '../components/common/ReelsShowcase';
-import { contact, social, whatsappLink } from '../data/site';
+import { social, whatsappLink, addressParts } from '../data/site';
 import { getProductsByTag, getProduct } from '../data/products';
 import { productImage, lifestyleImage, galleryImage, siteImages } from '../data/images';
 import { galleryItems, instagramPosts } from '../data/gallery';
@@ -27,6 +27,31 @@ const initials = (name) =>
     .map((n) => Array.from(n)[0])
     .join('');
 
+/**
+ * 50 twinkling gold stars in the hero, spread evenly with a fixed pattern (same layout on every
+ * visit). Stars that would sit on the headline and text are skipped; on phones, where the text
+ * spans the full width, only the stars along the side edges show.
+ * Each star: [top %, left %, size px, delay s, show on phones].
+ */
+const HERO_STAR_COUNT = 50;
+const heroSparkles = (() => {
+  const stars = [];
+  const frac = (n) => n - Math.floor(n);
+  for (let i = 1; stars.length < HERO_STAR_COUNT; i += 1) {
+    // R2 low-discrepancy sequence: even coverage without clumps.
+    const left = +(frac(i * 0.7548776662) * 100).toFixed(1);
+    const top = +(frac(i * 0.5698402910) * 100).toFixed(1);
+    const onText = left > 3 && left < 48 && top > 9 && top < 93;
+    if (onText) continue;
+    const size = 5 + ((i * 7) % 9);
+    const delay = +((i * 0.37) % 5).toFixed(2);
+    // Phones: the side edges, plus the margins beside the photos in the lower half.
+    const phone = left < 6 || left > 93 || (top > 50 && (left < 12 || left > 88));
+    stars.push([top, left, size, delay, phone]);
+  }
+  return stars;
+})();
+
 function Hero() {
   const { t } = useLanguage();
   const loc = useLocalized();
@@ -36,8 +61,12 @@ function Hero() {
     <section className="hero" aria-labelledby="hero-title">
       <div className="hero__pattern" aria-hidden="true" />
       <div className="hero__sparkles" aria-hidden="true">
-        {Array.from({ length: 8 }, (_, i) => (
-          <i key={i} />
+        {heroSparkles.map(([top, left, size, delay, phone], i) => (
+          <i
+            key={i}
+            className={phone ? undefined : 'hero__sparkle--wide'}
+            style={{ top: `${top}%`, left: `${left}%`, '--s': `${size}px`, '--d': `${delay}s`, '--t': `${4 + (i % 4) * 0.7}s` }}
+          />
         ))}
       </div>
       <div className="container hero__grid">
@@ -84,7 +113,6 @@ function Hero() {
               slides={siteImages.heroSlides.map((s) => ({ image: lifestyleImage(s.side), alt: t(s.sideAlt) }))}
               index={slide}
               sizes="(min-width: 1080px) 16vw, 30vw"
-              priority
             />
           </div>
           {spotlight && (
@@ -437,7 +465,6 @@ function Instagram() {
 function VisitBand() {
   const { t } = useLanguage();
   const { hours } = useLocalized();
-  const { address } = contact;
   return (
     <section className="visit-band" aria-labelledby="visit-title">
       <div className="container visit-band__grid">
@@ -449,7 +476,7 @@ function VisitBand() {
         </div>
         <div className="visit-band__info">
           <p>
-            <Icon name="map" size={18} /> {[address.line2, address.city].filter(Boolean).join(', ')}
+            <Icon name="map" size={18} /> <span>{addressParts().join(', ')}</span>
           </p>
           <p>
             <Icon name="clock" size={18} /> {hours[0].days}, {hours[0].time}

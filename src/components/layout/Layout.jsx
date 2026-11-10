@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useRef } from 'react';
+import { Suspense } from 'react';
 import { Outlet, ScrollRestoration, useLocation } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
@@ -19,14 +19,10 @@ function PageLoader() {
 
 export default function Layout() {
   const { t } = useLanguage();
-  const { pathname } = useLocation();
-  // The fade-up plays when moving between pages, not on the first load (the hero has its own entrance).
-  const hasNavigated = useRef(false);
-  const firstPath = useRef(pathname);
-  useEffect(() => {
-    if (pathname !== firstPath.current) hasNavigated.current = true;
-  }, [pathname]);
-  const animate = hasNavigated.current || pathname !== firstPath.current;
+  const { pathname, key } = useLocation();
+  // The fade-up plays when moving between pages, not on the first load (the hero has its own
+  // entrance). React Router gives the page the visitor arrived on the key "default".
+  const animate = key !== 'default';
   return (
     <>
       <a href="#main" className="skip-link">

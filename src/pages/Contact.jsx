@@ -128,7 +128,7 @@ export default function Contact() {
                       </span>
                     ))}
                   </p>
-                  <a href={contact.mapLink} target="_blank" rel="noopener noreferrer" className="text-link">
+                  <a href={contact.directionsLink} target="_blank" rel="noopener noreferrer" className="text-link">
                     {t('contact.directions')} <Icon name="arrowRight" size={16} />
                   </a>
                 </div>

@@ -501,7 +501,7 @@
 .whatsapp-float {
   position: fixed;
   right: var(--fab-edge);
-  bottom: calc(var(--fab-edge) + env(safe-area-inset-bottom, 0px));
+  bottom: var(--fab-edge);
   z-index: 90;
   display: grid;
   place-items: center;

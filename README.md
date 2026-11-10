@@ -59,7 +59,7 @@ Values marked `// DUMMY` are placeholders (prices, dates, testimonials). Replace
 
 - Colours and fonts are CSS variables at the top of `src/styles/base.css` (Midnight & Gold; Playfair Display + Montserrat, with Noto Serif Devanagari + Mukta for Hindi/Marathi).
 - Dark-mode colours and the Hindi/Marathi typography rules live in `src/styles/theme.css`.
-- The sun/moon button in the header switches themes. First-time visitors get their device's setting, and a manual choice is remembered.
+- The sun/moon button in the header switches themes. The site opens in light mode; a visitor who switches to dark mode gets it again on later visits.
 
 ## Hosting
 
