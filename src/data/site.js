@@ -20,7 +20,7 @@ export const contact = {
   phoneDisplay: '+91 86260 64964',
   phoneLink: `tel:+${phoneDigits}`,
   whatsappNumber: phoneDigits,
-  email: 'hello@aarusfancysarees.in', // DUMMY
+  email: 'erparul9@gmail.com',
   address: {
     // Add the shop number/building (line1), street/area (line2) and pincode when ready;
     // empty parts are simply left out wherever the address is shown.
