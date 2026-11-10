@@ -1,0 +1,30 @@
+# name | unsplash photo id | used for
+bridal-ivory-red | 1678705730064-a7ecbab4b3fb | hero, about
+purple-silk-portrait | 1641699862936-be9f49b1c38d | hero, gallery
+mint-silk-jewellery | 1679006831648-7c9ea12e5807 | hero, gallery
+temple-red-saree | 1618901185975-d59f7091bcfe | wide banner
+purple-saree-studio | 1610030469983-98e550d6193c | gallery
+ivory-cotton-sunlight | 1739429942851-9083ee185d3d | gallery
+rust-silk-drape | 1610030468706-9a6dbad49b0a | gallery
+blue-silk-seated | 1610189012906-4c0aa9b9781e | wide banner
+green-saree-smile | 1770838447151-05a876cdee3d | gallery, about
+trio-purple-sarees | 1610189026205-27510cfc52f8 | gallery
+ivory-handloom-garden | 1572470176170-98fa8abcb741 | gallery
+emerald-silk-studio | 1610030469245-ab65c4583802 | gallery
+seaside-banarasi | 1727430228383-aa1fb59db8bf | gallery, contact
+pink-silk-tree | 1617627143750-d86bc21e42bb | gallery
+georgette-courtyard | 1769275061202-cf3ef67d7279 | gallery
+forest-light-saree | 1769275061721-bb6439d24ebc | gallery
+black-silver-saree | 1610030469668-8e9f641aaf27 | gallery
+mint-tissue-saree | 1609748340041-f5d61e061ebc | gallery
+organza-steps | 1692992193981-d3d92fabd9cb | gallery
+red-silk-garden | 1619516388835-2b60acc4049e | gallery
+royal-blue-silk | 1610189013429-a703f4b245cf | gallery
+red-black-street | 1761125135357-99cbe52a6271 | gallery
+green-red-paithani-style | 1708182564325-fb1d3a3864d3 | gallery
+lawn-maroon-saree | 1758120221788-d576fa58f520 | wide banner
+craft-zari-border | 1588140686379-1b76a52103dc | craftsmanship
+craft-silk-stack | 1710440189404-e95fabead2a3 | craftsmanship
+craft-gold-embroidery | 1787554497632-1727c23e58cb | craftsmanship
+craft-red-silk | 1616756141603-6d37d5cde2a2 | craftsmanship
+craft-ikat-border | 1616986491129-3e37cb654c82 | craftsmanship

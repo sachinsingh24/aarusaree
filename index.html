@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en-IN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#15233f" />
+    <!-- Icons are generated from public/brand_logo.jpg by scripts/make-meta-images.mjs during the build
+         (only when the logo or hero photo has changed). -->
+    <link rel="icon" type="image/png" sizes="64x64" href="/favicon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+    <!-- Per-page versions of these tags are written by scripts/prerender-meta.mjs after the build.
+         %VITE_SITE_URL% comes from the .env file (your live domain). -->
+    <title>Aaru's Fancy Sarees | Elegance Woven in Tradition</title>
+    <meta name="description" content="Aaru's Fancy Sarees, Badlapur: Paithani, Narayan Peth, Patola silk, Kalanjali and designer sarees, hand-picked for weddings, festivals and everyday elegance." />
+    <link rel="canonical" href="%VITE_SITE_URL%/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Aaru's Fancy Sarees" />
+    <meta property="og:url" content="%VITE_SITE_URL%/" />
+    <meta property="og:title" content="Aaru's Fancy Sarees | Elegance Woven in Tradition" />
+    <meta property="og:description" content="Paithani, Narayan Peth, Patola silk, Kalanjali and designer sarees from Badlapur, Maharashtra." />
+    <meta property="og:image" content="%VITE_SITE_URL%/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Montserrat:wght@300;400;500;600&family=Noto+Serif+Devanagari:wght@400..600&family=Mukta:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Apply the saved theme and language before first paint (prevents a flash of the wrong theme). -->
+    <script>
+      (function () {
+        var root = document.documentElement;
+        try {
+          var theme = localStorage.getItem('aarus-theme');
+          if (theme !== 'dark' && theme !== 'light') {
+            theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          }
+          root.setAttribute('data-theme', theme);
+          var meta = document.querySelector('meta[name="theme-color"]');
+          if (meta && theme === 'dark') meta.setAttribute('content', '#0b1222');
+          var lang = localStorage.getItem('aarus-language');
+          if (lang === 'hi' || lang === 'mr') root.setAttribute('lang', lang);
+        } catch (e) {
+          root.setAttribute('data-theme', 'light');
+        }
+        window.addEventListener('load', function () {
+          setTimeout(function () {
+            root.classList.add('theme-ready');
+          }, 100);
+        });
+      })();
+    </script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "ClothingStore",
+        "name": "Aaru's Fancy Sarees",
+        "slogan": "Elegance Woven in Tradition",
+        "telephone": "+91 86260 64964",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Badlapur",
+          "addressRegion": "Maharashtra",
+          "addressCountry": "IN"
+        },
+        "sameAs": ["https://www.instagram.com/aarusfancy_sarees/"]
+      }
+    </script>
+  </head>
+  <body>
+    <noscript>Please enable JavaScript to view Aaru's Fancy Sarees.</noscript>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

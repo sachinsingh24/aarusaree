@@ -1,0 +1,844 @@
+/* ==========================================================================
+   Header, navigation, dropdown, mobile drawer, footer
+   ========================================================================== */
+
+/* Header -------------------------------------------------------------------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--glass);
+  backdrop-filter: saturate(1.4) blur(12px);
+  -webkit-backdrop-filter: saturate(1.4) blur(12px);
+  border-bottom: 1px solid transparent;
+  transition:
+    border-color 0.3s var(--ease),
+    box-shadow 0.3s var(--ease);
+}
+
+.site-header.is-scrolled {
+  border-bottom-color: var(--line);
+  box-shadow: 0 8px 30px -18px rgba(10, 19, 36, 0.35);
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  height: var(--header-h);
+  transition: height 0.3s var(--ease);
+}
+
+.site-header.is-scrolled .site-header__inner {
+  height: 66px;
+}
+
+.site-header__actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Logo */
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.logo:hover {
+  color: var(--primary);
+}
+
+/* The logo image is a round emblem on white: shown as a circle so it sits cleanly on
+   any background (light header, dark mode, navy footer). */
+.logo__mark {
+  flex-shrink: 0;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #fff;
+  box-shadow: 0 0 0 1px var(--line), 0 4px 14px -6px rgba(10, 19, 36, 0.35);
+  transition:
+    transform 0.4s var(--ease),
+    width 0.3s var(--ease),
+    height 0.3s var(--ease);
+}
+
+.logo:hover .logo__mark {
+  transform: scale(1.05);
+}
+
+.site-header.is-scrolled .logo__mark {
+  width: 46px;
+  height: 46px;
+}
+
+.logo__text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.logo__name {
+  font-family: var(--font-heading);
+  font-size: 1.48rem;
+  font-weight: 500;
+  font-style: italic;
+  letter-spacing: 0.01em;
+  color: var(--primary);
+}
+
+.logo__sub {
+  margin-top: 4px;
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.36em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.logo--light .logo__name {
+  color: var(--on-dark);
+}
+
+.logo--light .logo__mark {
+  width: 84px;
+  height: 84px;
+  box-shadow: 0 0 0 3px rgba(201, 165, 92, 0.55);
+}
+
+.logo--light .logo__sub {
+  color: var(--gold-light);
+}
+
+/* Main nav */
+.main-nav {
+  display: none;
+}
+
+.main-nav__list {
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 2.2vw, 34px);
+}
+
+.main-nav__item {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.main-nav__link {
+  position: relative;
+  padding-block: 10px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.main-nav__link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 2px;
+  height: 1px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s var(--ease);
+}
+
+.main-nav__link:hover,
+.main-nav__link.active {
+  color: var(--primary);
+}
+
+.main-nav__link:hover::after,
+.main-nav__link.active::after {
+  transform: scaleX(1);
+}
+
+.main-nav__toggle {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  margin-left: 2px;
+  color: var(--ink);
+  border-radius: 50%;
+  transition: transform 0.25s var(--ease);
+}
+
+.has-dropdown.is-open .main-nav__toggle {
+  transform: rotate(180deg);
+  color: var(--primary);
+}
+
+/* Dropdown */
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 560px;
+  padding-top: 18px;
+  transform: translate(-50%, 8px);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.25s var(--ease),
+    transform 0.25s var(--ease),
+    visibility 0.25s;
+}
+
+.has-dropdown.is-open .dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+}
+
+@media (hover: hover) {
+  .has-dropdown:not(.no-hover):hover .dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0);
+  }
+
+  .has-dropdown:not(.no-hover):hover .main-nav__toggle {
+    transform: rotate(180deg);
+    color: var(--primary);
+  }
+}
+
+.dropdown__inner {
+  padding: 18px;
+  background: var(--ivory);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+.dropdown__list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+}
+
+.dropdown__link {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px;
+  border-radius: 10px;
+  color: var(--ink);
+  transition: background-color 0.2s var(--ease);
+}
+
+.dropdown__link:hover {
+  background: var(--cream);
+  color: var(--primary);
+}
+
+.dropdown__thumb {
+  flex-shrink: 0;
+  width: 48px;
+  height: 60px;
+  overflow: hidden;
+  border-radius: 999px 999px 6px 6px;
+  background: var(--beige);
+}
+
+.dropdown__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.dropdown__name {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+.dropdown__tagline {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.dropdown__footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 12px;
+  padding: 14px 10px 4px;
+  border-top: 1px solid var(--line);
+}
+
+/* Header WhatsApp + burger */
+.header-whatsapp span {
+  display: none;
+}
+
+.header-whatsapp.btn--sm {
+  padding: 0;
+  width: 42px;
+  min-height: 42px;
+  height: 42px;
+}
+
+.menu-button {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  color: var(--primary);
+  border-radius: 50%;
+}
+
+.menu-button:hover {
+  background: var(--cream);
+}
+
+@media (min-width: 560px) {
+  .header-whatsapp span {
+    display: inline;
+  }
+
+  .header-whatsapp.btn--sm {
+    width: auto;
+    padding: 8px 18px;
+  }
+}
+
+@media (min-width: 1080px) {
+  .main-nav {
+    display: block;
+  }
+
+  .menu-button {
+    display: none;
+  }
+}
+
+@media (max-width: 380px) {
+  .logo__mark {
+    width: 44px;
+    height: 44px;
+  }
+
+  .logo__name {
+    font-size: 1.28rem;
+  }
+
+  .logo__sub {
+    letter-spacing: 0.26em;
+  }
+}
+
+/* Mobile drawer ---------------------------------------------------------------- */
+.drawer-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(10, 19, 36, 0.45);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.3s var(--ease),
+    visibility 0.3s;
+}
+
+.drawer-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 201;
+  display: flex;
+  flex-direction: column;
+  width: min(380px, 88vw);
+  padding: 18px 24px 28px;
+  background: var(--ivory);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  transform: translateX(100%);
+  visibility: hidden;
+  transition:
+    transform 0.35s var(--ease),
+    visibility 0s linear 0.35s; /* hide only after the slide-out finishes */
+}
+
+.drawer.is-open {
+  transform: none;
+  visibility: visible;
+  box-shadow: var(--shadow-lg);
+  transition:
+    transform 0.35s var(--ease),
+    visibility 0s; /* visible (and focusable) immediately on open */
+}
+
+.drawer__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.drawer__close {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  color: var(--primary);
+  border-radius: 50%;
+}
+
+.drawer__list {
+  padding-block: 8px;
+}
+
+.drawer__list > li {
+  border-bottom: 1px solid var(--line);
+}
+
+.drawer__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.drawer__link {
+  display: block;
+  flex: 1;
+  padding: 15px 0;
+  font-family: var(--font-heading);
+  font-size: 1.28rem;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.drawer__link.active {
+  color: var(--primary);
+}
+
+.drawer__expand {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  color: var(--primary);
+  transition: transform 0.25s var(--ease);
+}
+
+.drawer__expand.is-open {
+  transform: rotate(180deg);
+}
+
+.drawer__sublist {
+  padding: 0 0 14px 14px;
+  border-left: 1px solid var(--gold-light);
+  margin-bottom: 14px;
+}
+
+.drawer__sublist a {
+  display: block;
+  padding: 9px 0;
+  color: var(--text);
+}
+
+.drawer__sublist a.active {
+  color: var(--primary);
+  font-weight: 500;
+}
+
+.drawer__contact {
+  display: grid;
+  gap: 14px;
+  margin-top: auto;
+  padding-top: 24px;
+}
+
+.drawer__phone {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: var(--ink);
+}
+
+/* Floating buttons (WhatsApp + back to top) ----------------------------------- */
+/* Both buttons share one size and one right edge, stacked with a fixed gap. */
+:root {
+  --fab-size: 56px;
+  --fab-edge: clamp(16px, 3vw, 28px);
+  --fab-gap: 14px;
+}
+
+@media (max-width: 600px) {
+  :root {
+    --fab-size: 50px;
+    --fab-gap: 12px;
+  }
+}
+
+.whatsapp-float {
+  position: fixed;
+  right: var(--fab-edge);
+  bottom: calc(var(--fab-edge) + env(safe-area-inset-bottom, 0px));
+  z-index: 90;
+  display: grid;
+  place-items: center;
+  width: var(--fab-size);
+  height: var(--fab-size);
+  border-radius: 50%;
+  background: var(--whatsapp);
+  color: var(--on-dark);
+  box-shadow: 0 12px 30px -8px rgba(28, 124, 67, 0.6);
+  transition:
+    transform 0.25s var(--ease),
+    background-color 0.25s var(--ease);
+}
+
+.whatsapp-float::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid var(--whatsapp);
+  animation: ping 2.6s var(--ease) infinite;
+}
+
+@keyframes ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  70%,
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+.whatsapp-float__icon {
+  width: 54%;
+  height: 54%;
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.07);
+  background: var(--whatsapp-hover);
+  color: var(--on-dark);
+}
+
+/* Page loader ----------------------------------------------------------------- */
+.page-loader {
+  display: grid;
+  place-items: center;
+  min-height: 60vh;
+}
+
+.page-loader__spinner {
+  width: 42px;
+  height: 42px;
+  border: 2px solid var(--beige);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Footer ---------------------------------------------------------------------- */
+.site-footer {
+  position: relative;
+  /* clip (not hidden): crops the oversized mandala without turning the footer into a hidden
+     scroll area that focus/scrollIntoView could shift sideways. */
+  overflow: hidden;
+  overflow: clip;
+  isolation: isolate;
+  background: var(--navy-ink);
+  color: rgba(255, 255, 255, 0.74);
+  font-size: 0.94rem;
+}
+
+.site-footer__border {
+  position: relative;
+  overflow: hidden;
+  overflow: clip;
+  height: 10px;
+  background:
+    repeating-linear-gradient(90deg, var(--gold-light) 0 2px, transparent 2px 10px) top / 100% 3px no-repeat,
+    linear-gradient(var(--navy), var(--navy)) top / 100% 100% no-repeat;
+}
+
+/* A streak of light gliding along the zari border. */
+.site-footer__border::after {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 28%;
+  background: linear-gradient(90deg, transparent, rgba(255, 236, 190, 0.85), transparent);
+  transform: translateX(-100%);
+  animation: zari-shimmer 6s var(--ease) infinite;
+}
+
+@keyframes zari-shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  55%,
+  100% {
+    transform: translateX(360%);
+  }
+}
+
+/* Warm gold glow in the corners. */
+.site-footer__glow {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 55% 70% at 0% 0%, rgba(201, 165, 92, 0.16), transparent 65%),
+    radial-gradient(ellipse 45% 60% at 100% 100%, rgba(201, 165, 92, 0.12), transparent 65%);
+}
+
+/* Large mandala watermark, turning very slowly. */
+.site-footer__mandala {
+  position: absolute;
+  right: -140px;
+  bottom: -160px;
+  z-index: -1;
+  width: 560px;
+  height: 560px;
+  color: var(--gold-light);
+  opacity: 0.08;
+  pointer-events: none;
+  animation: mandala-turn 140s linear infinite;
+}
+
+@keyframes mandala-turn {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 699px) {
+  .site-footer__mandala {
+    width: 380px;
+    height: 380px;
+    right: -150px;
+    bottom: -120px;
+  }
+}
+
+.site-footer a {
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.site-footer a:hover {
+  color: var(--gold-light);
+}
+
+.site-footer__grid {
+  display: grid;
+  gap: 44px;
+  padding-block: clamp(56px, 7vw, 88px);
+}
+
+.site-footer__brand p {
+  margin: 22px 0 26px;
+  max-width: 400px;
+}
+
+.site-footer__title {
+  position: relative;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+}
+
+/* Short gold rule under each column title */
+.site-footer__title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 28px;
+  height: 1px;
+  background: var(--gold-light);
+  transition: width 0.4s var(--ease);
+}
+
+.site-footer__col:hover .site-footer__title::after {
+  width: 56px;
+}
+
+.site-footer__col ul {
+  display: grid;
+  gap: 10px;
+}
+
+/* Footer links: slide right, gold diamond appears, underline draws in. */
+.site-footer__link {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 2px;
+  background: linear-gradient(var(--gold-light), var(--gold-light)) 0 100% / 0 1px no-repeat;
+  transition:
+    color 0.25s var(--ease),
+    transform 0.3s var(--ease),
+    background-size 0.35s var(--ease);
+}
+
+.site-footer__link::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -14px;
+  width: 6px;
+  height: 6px;
+  background: var(--gold-light);
+  opacity: 0;
+  transform: translateY(-50%) rotate(45deg) scale(0.4);
+  transition:
+    opacity 0.25s var(--ease),
+    transform 0.3s var(--ease);
+}
+
+.site-footer__link:hover,
+.site-footer__link:focus-visible {
+  transform: translateX(14px);
+  background-size: 100% 1px;
+}
+
+.site-footer__link:hover::before,
+.site-footer__link:focus-visible::before {
+  opacity: 1;
+  transform: translateY(-50%) rotate(45deg) scale(1);
+}
+
+.site-footer__line {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.site-footer__line .icon {
+  margin-top: 4px;
+  color: var(--gold-light);
+}
+
+.social-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.social-list__link {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(239, 227, 200, 0.3);
+  border-radius: 50%;
+  transition:
+    background-color 0.2s var(--ease),
+    color 0.2s var(--ease),
+    border-color 0.2s var(--ease),
+    transform 0.3s var(--ease),
+    box-shadow 0.3s var(--ease);
+}
+
+.site-footer .social-list__link:hover {
+  background: var(--gold-light);
+  border-color: var(--gold-light);
+  color: var(--navy-ink);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 22px -8px rgba(201, 165, 92, 0.75);
+}
+
+/* Footer logo: soft gold halo */
+.site-footer .logo__mark {
+  box-shadow:
+    0 0 0 3px rgba(201, 165, 92, 0.55),
+    0 0 28px rgba(201, 165, 92, 0.28);
+}
+
+.social-list--dark .social-list__link {
+  border-color: var(--line-strong);
+  color: var(--primary);
+}
+
+.social-list--dark .social-list__link:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--ivory);
+}
+
+.site-footer__bottom {
+  border-top: 1px solid transparent;
+  border-image: linear-gradient(90deg, transparent, rgba(201, 165, 92, 0.45), transparent) 1;
+  font-size: 0.85rem;
+}
+
+.site-footer__bottom-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-block: 22px;
+  padding-bottom: 90px; /* room for the floating WhatsApp button on mobile */
+}
+
+.site-footer__bottom ul {
+  display: flex;
+  gap: 24px;
+}
+
+@media (min-width: 700px) {
+  .site-footer__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .site-footer__bottom-inner {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 22px;
+    padding-right: calc(var(--gutter) + 80px); /* keep links clear of the floating WhatsApp button */
+  }
+}
+
+@media (min-width: 1080px) {
+  .site-footer__grid {
+    grid-template-columns: 1.5fr 0.8fr 1fr 1.3fr;
+    gap: 48px;
+  }
+}

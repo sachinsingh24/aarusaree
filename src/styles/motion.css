@@ -1,0 +1,249 @@
+/* ==========================================================================
+   Motion: extra animations that make the site feel alive.
+   Everything here is switched off for visitors who ask their device for reduced motion
+   (see the prefers-reduced-motion rule in base.css and the block at the end of this file).
+   ========================================================================== */
+
+/* ── Page change: each new page fades up gently ─────────────────────────── */
+/* "backwards" fill: no transform stays on the page afterwards (keeps sticky/fixed parts working). */
+.page-transition.is-entering {
+  animation: page-in 0.55s var(--ease) backwards;
+}
+
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+/* ── Hero: a gold light passing across the highlighted word ─────────────── */
+.hero__title em {
+  --em-color: var(--primary);
+  --em-shine: var(--gold-light);
+  /* Vertical padding on an inline element widens the painted area without moving the line,
+     so italic tails and Devanagari vowel marks aren't cut off by background-clip. */
+  padding: 0.14em 0.1em;
+  margin: 0 -0.1em;
+  background-image: linear-gradient(110deg, var(--em-color) 0 42%, var(--em-shine) 50%, var(--em-color) 58% 100%);
+  background-size: 250% 100%;
+  background-position: 0 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: text-shine 7s ease-in-out 1.6s infinite;
+}
+
+html:lang(hi) .hero__title em,
+html:lang(mr) .hero__title em {
+  --em-color: var(--gold);
+  --em-shine: #f6e3b0;
+}
+
+@keyframes text-shine {
+  0% {
+    background-position: 100% 0;
+  }
+  45%,
+  100% {
+    background-position: 0 0;
+  }
+}
+
+/* ── Hero: tiny gold sparkles twinkling around the photos ───────────────── */
+.hero__sparkles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.hero__sparkles i {
+  position: absolute;
+  width: var(--s, 12px);
+  aspect-ratio: 1;
+  background: var(--gold-light);
+  clip-path: polygon(50% 0, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0 50%, 39% 39%);
+  opacity: 0;
+  animation: twinkle 4.8s ease-in-out var(--d, 0s) infinite;
+}
+
+.hero__sparkles i:nth-child(1) { top: 12%; left: 54%; --s: 14px; --d: 0.2s; }
+.hero__sparkles i:nth-child(2) { top: 22%; left: 94%; --s: 10px; --d: 1.4s; }
+.hero__sparkles i:nth-child(3) { top: 48%; left: 50%; --s: 8px; --d: 2.6s; }
+.hero__sparkles i:nth-child(4) { top: 70%; left: 96%; --s: 12px; --d: 0.9s; }
+.hero__sparkles i:nth-child(5) { top: 86%; left: 58%; --s: 9px; --d: 3.3s; }
+.hero__sparkles i:nth-child(6) { top: 8%; left: 30%; --s: 10px; --d: 2s; }
+.hero__sparkles i:nth-child(7) { top: 62%; left: 6%; --s: 8px; --d: 3.8s; }
+.hero__sparkles i:nth-child(8) { top: 36%; left: 74%; --s: 7px; --d: 4.2s; }
+
+/* On phones the copy sits above the photos, so keep sparkles to the edges. */
+@media (max-width: 899px) {
+  .hero__sparkles i:nth-child(3),
+  .hero__sparkles i:nth-child(6),
+  .hero__sparkles i:nth-child(8) {
+    display: none;
+  }
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.3) rotate(0deg);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1) rotate(45deg);
+  }
+}
+
+/* ── Hero: the "New arrival" card floats softly ─────────────────────────── */
+/* Uses the separate `translate` property so it doesn't fight the entrance or hover transforms. */
+.hero__spotlight {
+  animation:
+    rise-in 0.9s var(--ease) 0.8s backwards,
+    float-soft 6s ease-in-out 1.8s infinite;
+}
+
+@keyframes float-soft {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -8px;
+  }
+}
+
+/* ── Inner page banners: slow zoom on the photo, text rises in ──────────── */
+.page-banner__media img {
+  animation: banner-zoom 9s cubic-bezier(0.2, 0.6, 0.3, 1) both;
+}
+
+@keyframes banner-zoom {
+  from {
+    transform: scale(1.12);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.page-banner__inner > * {
+  animation: rise-in 0.85s var(--ease) backwards;
+}
+
+.page-banner__inner > :nth-child(2) { animation-delay: 0.1s; }
+.page-banner__inner > :nth-child(3) { animation-delay: 0.2s; }
+.page-banner__inner > :nth-child(4) { animation-delay: 0.3s; }
+.page-banner__inner > :nth-child(5) { animation-delay: 0.4s; }
+
+/* ── Buttons: a streak of light on hover ────────────────────────────────── */
+.btn--primary,
+.btn--gold,
+.btn--whatsapp {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.btn--primary::after,
+.btn--gold::after,
+.btn--whatsapp::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.45) 50%, transparent 70%);
+  transform: translateX(-120%);
+}
+
+.btn--primary:hover::after,
+.btn--gold:hover::after,
+.btn--whatsapp:hover::after {
+  transform: translateX(120%);
+  transition: transform 0.8s var(--ease);
+}
+
+/* ── Saree cards: a soft ivory curtain lifts off each photo as it appears ── */
+.reveal .product-card__media::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background: linear-gradient(180deg, var(--cream), var(--beige));
+  transform-origin: top;
+  transform: scaleY(0);
+  transition: transform 0.9s cubic-bezier(0.7, 0, 0.2, 1) calc(var(--reveal-delay, 0ms) + 0.15s);
+}
+
+.reveal:not(.is-visible) .product-card__media::before {
+  transform: scaleY(1);
+  transition: none;
+}
+
+/* ── Section headings: the gold ornament draws itself in as you scroll ──── */
+@supports (animation-timeline: view()) {
+  .section-heading__ornament,
+  .page-banner__ornament {
+    animation: ornament-draw linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 90%;
+  }
+
+  @keyframes ornament-draw {
+    from {
+      clip-path: inset(0 50% 0 50%);
+      opacity: 0.2;
+    }
+    to {
+      clip-path: inset(0 0 0 0);
+      opacity: 1;
+    }
+  }
+}
+
+/* ── Phone menu: links slide in one after another ───────────────────────── */
+.drawer.is-open .drawer__list > li {
+  animation: drawer-item 0.45s var(--ease) backwards;
+}
+
+.drawer.is-open .drawer__list > li:nth-child(1) { animation-delay: 0.08s; }
+.drawer.is-open .drawer__list > li:nth-child(2) { animation-delay: 0.13s; }
+.drawer.is-open .drawer__list > li:nth-child(3) { animation-delay: 0.18s; }
+.drawer.is-open .drawer__list > li:nth-child(4) { animation-delay: 0.23s; }
+.drawer.is-open .drawer__list > li:nth-child(5) { animation-delay: 0.28s; }
+.drawer.is-open .drawer__list > li:nth-child(6) { animation-delay: 0.33s; }
+.drawer.is-open .drawer__list > li:nth-child(7) { animation-delay: 0.38s; }
+
+@keyframes drawer-item {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+}
+
+/* ── Reduced motion: no movement at all, just the finished look ─────────── */
+@media (prefers-reduced-motion: reduce) {
+  .page-transition.is-entering,
+  .hero__title em,
+  .hero__spotlight,
+  .page-banner__media img,
+  .page-banner__inner > *,
+  .section-heading__ornament,
+  .page-banner__ornament,
+  .drawer.is-open .drawer__list > li {
+    animation: none;
+  }
+
+  .hero__sparkles,
+  .btn--primary::after,
+  .btn--gold::after,
+  .btn--whatsapp::after,
+  .reveal .product-card__media::before {
+    display: none;
+  }
+}
