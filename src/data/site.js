@@ -3,7 +3,7 @@
  * Values marked `// DUMMY` are placeholders — replace them with real details.
  */
 
-const phoneDigits = '918626064964'; // used for WhatsApp + tel: links
+const phoneDigits = '919867503342'; // used for WhatsApp + tel: links
 
 export const brand = {
   name: "Aaru's Fancy Sarees",
@@ -17,7 +17,7 @@ export const brand = {
 };
 
 export const contact = {
-  phoneDisplay: '+91 86260 64964',
+  phoneDisplay: '+91 98675 03342',
   phoneLink: `tel:+${phoneDigits}`,
   whatsappNumber: phoneDigits,
   email: 'erparul9@gmail.com',
