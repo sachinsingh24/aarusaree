@@ -16,24 +16,27 @@ export const brand = {
     "Aaru's Fancy Sarees, Badlapur — Paithani, Narayan Peth, Patola silk, Kalanjali and designer sarees, hand-picked for weddings, festivals and everyday elegance. Enquire on WhatsApp.",
 };
 
+// Map pin (no API key required): set at DNS Bank, Kulgaon branch, Badlapur East (opp. Atithi Hotel),
+// since the shop is next to it. For the shop's own pin, change these two numbers.
+const shopPin = { lat: 19.1642026, lng: 73.2396524 };
+
 export const contact = {
   phoneDisplay: '+91 98675 03342',
   phoneLink: `tel:+${phoneDigits}`,
   whatsappNumber: phoneDigits,
   email: 'erparul9@gmail.com',
   address: {
-    // Add the shop number/building (line1), street/area (line2) and pincode when ready;
-    // empty parts are simply left out wherever the address is shown.
-    line1: '',
-    line2: '',
-    city: 'Badlapur',
+    // Empty parts are simply left out wherever the address is shown.
+    line1: 'Shop No. 8, Shiv Kripa Building',
+    line2: 'Near DNS Bank',
+    city: 'Badlapur East',
     state: 'Maharashtra',
-    pincode: '',
+    pincode: '421503',
   },
-  // Google Maps embed for the (dummy) address — no API key required.
-  // Points at Badlapur for now; replace with the shop's exact Google Maps location when available.
-  mapEmbed: 'https://www.google.com/maps?q=Badlapur,+Maharashtra&output=embed',
-  mapLink: 'https://www.google.com/maps/search/?api=1&query=Badlapur%2C+Maharashtra',
+  geo: shopPin,
+  mapEmbed: `https://www.google.com/maps?q=${shopPin.lat},${shopPin.lng}&z=17&output=embed`,
+  // Opens Google Maps at the pin; visitors can tap "Directions" from there.
+  mapLink: `https://www.google.com/maps/search/?api=1&query=${shopPin.lat}%2C${shopPin.lng}`,
   hours: [
     { days: 'Monday – Saturday', time: '11:00 am – 9:00 pm' }, // DUMMY
     { days: 'Sunday', time: '12:00 pm – 8:00 pm' }, // DUMMY
@@ -42,7 +45,8 @@ export const contact = {
 
 /** Address parts to display, skipping any that are empty (e.g. ['Badlapur, Maharashtra']). */
 export function addressParts(a = contact.address) {
-  return [a.line1, a.line2, [a.city, a.state].filter(Boolean).join(', '), a.pincode].filter(Boolean);
+  const cityLine = [[a.city, a.state].filter(Boolean).join(', '), a.pincode].filter(Boolean).join(' ');
+  return [a.line1, a.line2, cityLine].filter(Boolean);
 }
 
 export const social = [

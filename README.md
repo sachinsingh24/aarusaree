@@ -23,7 +23,7 @@ All content lives in `src/data/`, separate from the UI:
 | `gallery.js` | Gallery photos and the Instagram showcase tiles |
 | `images.js` | Central image registry and named image slots (hero, banners and so on) |
 
-Values marked `// DUMMY` are placeholders (street address, prices, dates, testimonials). Replace them with real details before going live.
+Values marked `// DUMMY` are placeholders (prices, dates, testimonials). Replace them with real details before going live.
 
 ## Logo
 
