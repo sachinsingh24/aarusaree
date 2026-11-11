@@ -24,11 +24,13 @@ export default function Carousel({ label, header, children, className = '' }) {
     if (!el) return undefined;
     update();
     el.addEventListener('scroll', update, { passive: true });
-    const ro = new ResizeObserver(update);
-    ro.observe(el);
+    const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(update) : null;
+    if (ro) ro.observe(el);
+    else window.addEventListener('resize', update);
     return () => {
       el.removeEventListener('scroll', update);
-      ro.disconnect();
+      if (ro) ro.disconnect();
+      else window.removeEventListener('resize', update);
     };
   }, [update]);
 
