@@ -21,21 +21,34 @@ export default function CountUp({ value, duration = 1600 }) {
       return undefined;
     }
     let raf;
-    const io = new IntersectionObserver(([entry]) => {
-      if (!entry.isIntersecting) return;
+    let io;
+    let started = false;
+    const start = () => {
+      if (started) return;
+      started = true;
       io.disconnect();
-      const start = performance.now();
+      window.removeEventListener('scroll', checkPosition);
+      const startTime = performance.now();
       const tick = (now) => {
-        const p = Math.min(1, (now - start) / duration);
+        const p = Math.min(1, (now - startTime) / duration);
         const eased = 1 - Math.pow(1 - p, 3);
         setCurrent(Math.round(target * eased));
         if (p < 1) raf = requestAnimationFrame(tick);
       };
       raf = requestAnimationFrame(tick);
-    });
+    };
+    const checkPosition = () => {
+      if (el.getBoundingClientRect().top <= window.innerHeight) start();
+    };
+    io = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) start();
+    }, { rootMargin: '0px 0px 100px 0px' });
     io.observe(el);
+    window.addEventListener('scroll', checkPosition, { passive: true });
+    checkPosition();
     return () => {
       io.disconnect();
+      window.removeEventListener('scroll', checkPosition);
       cancelAnimationFrame(raf);
     };
   }, [animate, target, duration]);

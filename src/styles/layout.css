@@ -668,6 +668,18 @@
   padding-block: clamp(56px, 7vw, 88px);
 }
 
+@media (max-width: 699px) {
+  .site-footer__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 24px;
+  }
+
+  .site-footer__brand,
+  .site-footer__col:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
 .site-footer__brand p {
   margin: 22px 0 26px;
   max-width: 400px;

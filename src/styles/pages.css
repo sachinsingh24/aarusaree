@@ -424,6 +424,11 @@
 }
 
 @media (max-width: 599px) {
+  .collection-tile--feature .collection-tile__media {
+    aspect-ratio: 4 / 5;
+    border-radius: 999px 999px var(--radius) var(--radius);
+  }
+
   .collection-tile__tagline {
     display: none;
   }
